@@ -8,15 +8,18 @@ const authorization = {
     }
 
 const btn = document.getElementById('load');
+
 btn.onclick = () => {
     fetch(api,authorization)
     .then(r => r.json())
     .then(obj =>{
 
         const card = document.querySelectorAll('.card')
+        let stretch = document.querySelectorAll('.col-md-4')
 
         for(let i = 0; i<card.length;i++){
             const element = card[i]
+            const cl = stretch[i]
             const photo = obj.photos[i]
             element.firstElementChild.remove()
 
@@ -24,14 +27,19 @@ btn.onclick = () => {
             img.src = photo.src.small
             img.className += 'card-img-top'
             img.setAttribute('height','225px')
+            img.setAttribute('style','width: 288.4px;')
             img.addEventListener('click',()=>{
                 location.assign('./details.html?id=' + photo.id)
             })
             
             element.prepend(img)
 
+            
+            cl.classList.add('d-flex','align-items-stretch')
+
             element.querySelector('.card-title').innerText = photo.photographer
             element.querySelector('.card-text').innerText = photo.alt
+            element.querySelector('.card-text').setAttribute('style','width: 240.4px;')
             element.querySelector('.text-muted').innerText = photo.id
             
             const btns = element.querySelector('.btn-group')
