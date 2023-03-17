@@ -7,7 +7,6 @@ const authorization = {
         }
     }
 
-const urlParams = new URLSearchParams(window.location.search)
 const btn = document.getElementById('load');
 btn.onclick = () => {
     fetch(api,authorization)
@@ -24,6 +23,7 @@ btn.onclick = () => {
             const img = document.createElement('img')
             img.src = photo.src.small
             img.className += 'card-img-top'
+            img.setAttribute('height','225px')
             img.addEventListener('click',()=>{
                 location.assign('./details.html?id=' + photo.id)
             })
