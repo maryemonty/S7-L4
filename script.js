@@ -14,16 +14,31 @@ btn.onclick = () => {
     .then(r => r.json())
     .then(obj =>{
 
-        let arr = []
-        
-        for(let i = 0; i<9;i++){
-            const card = document.querySelectorAll('.card')[i]
-            card.firstElementChild.remove()
+        const card = document.querySelectorAll('.card')
+
+        for(let i = 0; i<card.length;i++){
+            const element = card[i]
+            const photo = obj.photos[i]
+            element.firstElementChild.remove()
+
             const img = document.createElement('img')
-            img.src = obj.photos[i].src.small
-            img.className += 'bd-placeholder-img card-img-top'
-            card.append(img)
-            arr.push(card)
+            img.src = photo.src.small
+            img.className += 'card-img-top'
+            img.addEventListener('click',()=>{
+                location.assign('./details.html?id=' + photo.id)
+            })
+            
+            element.prepend(img)
+
+            element.querySelector('.card-title').innerText = photo.photographer
+            element.querySelector('.card-text').innerText = photo.alt
+            element.querySelector('.text-muted').innerText = photo.id
+            
+            const btns = element.querySelector('.btn-group')
+            btns.lastElementChild.textContent = 'Hide'
+            btns.lastElementChild.addEventListener('click',(e)=>{
+                e.target.closest('.card').remove()
+            })
         }
         
     })
